@@ -39,7 +39,7 @@ class Homepage extends React.Component {
             </Typography>
           </Grid>
           <Grid item className={classes.gridItemStyle} xs={4}>
-            <CustomButton fullWidth to="/invitation" component={RouterLink}>
+            <CustomButton fullWidth to="/invite" component={RouterLink}>
               <Typography variant="h4">Generar</Typography>
             </CustomButton>
           </Grid>
