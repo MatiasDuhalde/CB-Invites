@@ -141,12 +141,14 @@ const RegisterForm = props => {
               />
             </Grid>
             <Grid item xs={6}>
-              <CustomButton onClick={() => reset(defaultValues)}>
-                Limpiar
+              <CustomButton fullWidth onClick={() => reset(defaultValues)}>
+                <Typography variant="h6">Limpiar</Typography>
               </CustomButton>
             </Grid>
             <Grid item xs={6}>
-              <CustomButton type="submit">Registrarse</CustomButton>
+              <CustomButton fullWidth type="submit">
+                <Typography variant="h6">Registrarse</Typography>
+              </CustomButton>
             </Grid>
           </Grid>
         </Paper>
