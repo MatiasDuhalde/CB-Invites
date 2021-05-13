@@ -17,12 +17,15 @@ class Navbar extends React.Component {
     const { classes } = this.props;
 
     return (
-      <AppBar position="fixed">
-        <Toolbar>
-          <img className={classes.logoImg} src={logo} alt="logo" />
-          <Typography variant="h4">CurrencyBird</Typography>
-        </Toolbar>
-      </AppBar>
+      <React.Fragment>
+        <AppBar position="fixed">
+          <Toolbar>
+            <img className={classes.logoImg} src={logo} alt="logo" />
+            <Typography variant="h4">CurrencyBird</Typography>
+          </Toolbar>
+        </AppBar>
+        <Toolbar />
+      </React.Fragment>
     );
   }
 }
