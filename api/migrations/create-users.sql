@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS users CASCADE;
+
+CREATE TABLE users(
+    id SERIAL PRIMARY KEY,
+    fullName VARCHAR(255),
+    email VARCHAR(255),
+    sex SMALLINT,
+    address TEXT,
+    createdAt TIMESTAMPTZ NOT NULL DEFAULT NOW()
+)
