@@ -1,14 +1,23 @@
 import Navbar from './Navbar';
-import { Router, Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
+import Homepage from './Homepage';
+import RegisterForm from './RegisterForm';
+import Container from '@material-ui/core/Container';
 
-function App() {
+const App = () => {
   return (
     <div>
-      <Router>
+      <BrowserRouter>
         <Navbar />
-      </Router>
+        <Container maxWidth="lg" style={{ padding: '1em 0 1em 0' }}>
+          <Route path="/" exact component={Homepage} />
+          <Route path="/register" exact component={RegisterForm} />
+          <Route path="/invite" exact component={Homepage} />
+          <Route path="/ranking" exact component={Homepage} />
+        </Container>
+      </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;
