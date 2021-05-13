@@ -2,14 +2,16 @@ import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 
 import logo from '../assets/logo.svg';
+import CustomButton from './CustomButton';
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   logoImg: {
-    marginTop: '10px',
+    marginTop: theme.spacing(1),
   },
   title: {
     textAlign: 'center',
@@ -24,32 +26,44 @@ const styles = theme => ({
   titleContainer: {
     flexGrow: 1,
   },
-});
+}));
 
-class Navbar extends React.Component {
-  render() {
-    const { classes } = this.props;
+const Navbar = props => {
+  const classes = useStyles();
 
-    return (
-      <React.Fragment>
-        <AppBar position="fixed">
-          <Toolbar>
-            <Grid container className={classes.gridStyle} spacing={2}>
-              <Grid item>
+  const location = useLocation();
+
+  return (
+    <React.Fragment>
+      <AppBar position="fixed">
+        <Toolbar>
+          <Grid container className={classes.gridStyle} spacing={2}>
+            <Grid item>
+              <RouterLink to="/">
                 <img className={classes.logoImg} src={logo} alt="logo" />
-              </Grid>
-              <Grid item className={classes.titleContainer}>
-                <Typography className={classes.title} variant="h4">
-                  App de Invitaciones
-                </Typography>
-              </Grid>
+              </RouterLink>
             </Grid>
-          </Toolbar>
-        </AppBar>
-        <Toolbar />
-      </React.Fragment>
-    );
-  }
-}
+            <Grid item className={classes.titleContainer}>
+              <Typography className={classes.title} variant="h4">
+                App de Invitaciones
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              style={{
+                visibility: location.pathname !== '/' ? 'visible' : 'hidden',
+              }}
+            >
+              <CustomButton to="/" component={RouterLink}>
+                <Typography variant="h6">Volver</Typography>
+              </CustomButton>
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
+      <Toolbar />
+    </React.Fragment>
+  );
+};
 
-export default withStyles(styles)(Navbar);
+export default Navbar;
