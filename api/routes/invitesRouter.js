@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get('/ranking', async (req, res) => {
   try {
-    ranking = getRanking().rows;
+    ranking = (await getRanking()).rows;
     res.json({ ranking });
   } catch (err) {
     res.json({
