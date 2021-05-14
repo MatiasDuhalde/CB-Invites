@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import { connect } from 'react-redux';
 import {
   makeStyles,
   Typography,
@@ -10,6 +11,7 @@ import {
 } from '@material-ui/core';
 
 import CustomButton from './CustomButton';
+import { createInviteLink } from '../actions';
 
 const useStyles = makeStyles(theme => ({
   formBase: {
@@ -21,6 +23,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const InviteForm = props => {
+  const { createdInvite } = props;
+
   const classes = useStyles();
 
   const defaultValues = {
@@ -31,8 +35,15 @@ const InviteForm = props => {
   const { handleSubmit, control, reset } = useForm({ defaultValues });
 
   const onSubmit = data => {
-    props.onSubmit(data);
+    props.createInviteLink(data);
   };
+
+  useEffect(() => {
+    if (createdInvite) {
+      console.log('SE HA CREADO CORRECTAMENTE LA INVITACIÓN');
+      console.log(createdInvite);
+    }
+  }, [createdInvite]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -101,4 +112,10 @@ const InviteForm = props => {
   );
 };
 
-export default InviteForm;
+const mapStateToProps = state => {
+  return {
+    createdInvite: state.invites.createdInvite,
+  };
+};
+
+export default connect(mapStateToProps, { createInviteLink })(InviteForm);
