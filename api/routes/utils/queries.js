@@ -24,7 +24,7 @@ const getRanking = async () => {
 const insertInviteLink = async user => {
   const linkCode = generateInviteLinkCode(user);
   return pool.query(
-    'INSERT INTO "inviteLink"("userId", code) VALUES ($1,$2) RETURNING id,"userId",code,"createdAt"',
+    'INSERT INTO "inviteLinks"("userId", code) VALUES ($1,$2) RETURNING id,"userId",code,"createdAt"',
     [user.id, linkCode],
   );
 };
