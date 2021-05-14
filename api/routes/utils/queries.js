@@ -8,7 +8,18 @@ const getUserByEmail = async email => {
   );
 };
 
-const createInvite = async user => {
+const getInviteLinkByCode = async linkCode => {
+  return pool.query(
+    'SELECT "inviteLinks".id,"userId","fullName",code,"inviteLinks"."createdAt" FROM "inviteLinks" INNER JOIN users ON "userId"=users.id WHERE code=($1)',
+    [linkCode],
+  );
+};
+
+const getRanking = async () => {
+  return pool.query('SELECT * FROM users');
+};
+
+const insertInviteLink = async user => {
   const linkCode = generateInviteLinkCode(user);
   return pool.query(
     'INSERT INTO "inviteLink"("userId", code) VALUES ($1,$2) RETURNING id,"userId",code,"createdAt"',
@@ -23,12 +34,18 @@ const insertUser = async user => {
   );
 };
 
-const getRanking = async () => {
-  return pool.query('SELECT * FROM users');
+const insertInvite = async invite => {
+  return pool.query(
+    'INSERT INTO "invites"("inviterId", "invitedId", "inviteLinkId") VALUES ($1,$2,$3) RETURNING "inviterId","invitedId","inviteLinkId"',
+    [invite.inviterId, invite.invitedId, invite.inviteLinkId],
+  );
 };
 
 module.exports = {
   getUserByEmail,
+  getInviteLinkByCode,
+  getRanking,
   insertUser,
-  createInvite,
+  insertInviteLink,
+  insertInvite,
 };
