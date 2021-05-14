@@ -12,7 +12,6 @@ import reducers from './reducers';
 import { SHOW_NOTIFICATION } from './actions/types';
 
 const catchError = store => next => action => {
-  console.log('dispatching', action);
   if (action.payload && action.payload.error) {
     return store.dispatch({
       type: SHOW_NOTIFICATION,
