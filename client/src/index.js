@@ -9,11 +9,26 @@ import reduxThunk from 'redux-thunk';
 import App from './components/App';
 import theme from './theme';
 import reducers from './reducers';
+import { SHOW_NOTIFICATION } from './actions/types';
+
+const catchError = store => next => action => {
+  console.log('dispatching', action);
+  if (action.payload && action.payload.error) {
+    return store.dispatch({
+      type: SHOW_NOTIFICATION,
+      payload: {
+        type: 'error',
+        message: action.payload.error,
+      },
+    });
+  }
+  return next(action);
+};
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   reducers,
-  composeEnhancers(applyMiddleware(reduxThunk)),
+  composeEnhancers(applyMiddleware(reduxThunk), applyMiddleware(catchError)),
 );
 
 ReactDOM.render(
