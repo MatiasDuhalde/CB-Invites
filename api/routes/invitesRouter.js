@@ -66,7 +66,7 @@ router.post('/user', async (req, res) => {
       inviteLinkId: inviteLink.id,
     };
     const invite = (await insertInvite(inviteData)).rows[0];
-    out.invite = invite;
+    out.invite = inviteLink;
   }
   return res.json(out);
 });
