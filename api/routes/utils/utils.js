@@ -1,3 +1,5 @@
+const md5 = require('md5');
+
 const validateEmail = email => {
   const re = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$/g;
   return re.test(email);
@@ -20,8 +22,8 @@ const validateUser = user => {
   );
 };
 
-const generateInviteLink = () => {
-  return 'QWEASD';
+const generateInviteLinkCode = user => {
+  return md5(`${user.id}${Date.now()}${user.id}`);
 };
 
 module.exports = {
@@ -29,5 +31,5 @@ module.exports = {
   validateSex,
   validateNotEmpty,
   validateUser,
-  generateInviteLink,
+  generateInviteLinkCode,
 };
