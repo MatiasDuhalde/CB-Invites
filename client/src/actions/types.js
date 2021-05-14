@@ -1,0 +1,1 @@
+export const FETCH_RANKING = 'FETCH_RANKING';

@@ -1,3 +1,6 @@
 import { combineReducers } from 'redux';
+import invitesReducer from './invitesReducer';
 
-export default combineReducers({});
+export default combineReducers({
+  invites: invitesReducer,
+});
