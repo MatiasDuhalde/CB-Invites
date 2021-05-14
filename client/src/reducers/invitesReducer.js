@@ -11,7 +11,7 @@ const invitesReducer = (state = INITIAL_STATE, action) => {
       newState.ranking = action.payload;
       return newState;
     case CREATE_INVITE_LINK:
-      return { ...state, invite: action.payload.user };
+      return { ...state, createdInvite: action.payload };
     default:
       return state;
   }
