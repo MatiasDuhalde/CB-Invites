@@ -26,13 +26,39 @@ const getUsers = async () => {
   return [];
 };
 
+const getInviteLinks = async () => {
+  try {
+    const queryResult = await pool.query('SELECT * FROM "inviteLinks"');
+    return queryResult.rows;
+  } catch (databaseError) {
+    console.log(databaseError);
+  }
+  return [];
+};
+
+const insertInviteLinks = async inviteLinks => {
+  try {
+    const promises = inviteLinks.map(inviteLink =>
+      pool.query('INSERT INTO "inviteLinks"("userId", code) VALUES ($1,$2)', [
+        inviteLink.userId,
+        inviteLink.code,
+      ]),
+    );
+    await Promise.all(promises);
+    return true;
+  } catch (databaseError) {
+    console.log(databaseError);
+  }
+  return false;
+};
+
 const insertInvites = async invites => {
   try {
     const promises = invites.map(invite =>
-      pool.query('INSERT INTO "inviteLinks"("userId", code) VALUES ($1,$2)', [
-        invite.userId,
-        invite.code,
-      ]),
+      pool.query(
+        'INSERT INTO "invites"("inviterId", "invitedId", "inviteLinkId") VALUES ($1,$2,$3)',
+        [invite.inviterId, invite.invitedId, invite.inviteLinkId],
+      ),
     );
     await Promise.all(promises);
     return true;
@@ -45,5 +71,7 @@ const insertInvites = async invites => {
 module.exports = {
   insertUsers,
   getUsers,
+  getInviteLinks,
+  insertInviteLinks,
   insertInvites,
 };
