@@ -14,61 +14,90 @@ const router = express.Router();
 router.get('/ranking', async (req, res) => {
   try {
     ranking = (await getRanking()).rows;
-    res.json(ranking);
+    return res.json(ranking);
   } catch (err) {
-    res.json({
-      error: err.message,
+    return res.json({
+      error: 'No se pudo obtener el ranking de usuarios.',
     });
   }
 });
 
 router.post('/user', async (req, res) => {
-  try {
-    const { fullName, email, sex, address, inviteCode } = req.body;
-    const userData = { fullName, email, sex: parseInt(sex), address };
-    if (!validateUser(userData)) {
-      throw new Error('Invalid user data');
-    }
-    const user = (await insertUser(userData)).rows[0];
-    const out = { user };
-    // If an invite code was supplied, we retrieve the corresponding invite
-    if (user && inviteCode) {
-      const inviteLink = (await getInviteLinkByCode(inviteCode)).rows[0];
-      // If invite link actually exists "accept" invite
-      if (inviteLink) {
-        const inviteData = {
-          inviterId: inviteLink.userId,
-          invitedId: user.id,
-          inviteLinkId: inviteLink.id,
-        };
-        const invite = (await insertInvite(inviteData)).rows[0];
-        out.invite = invite;
-      }
-    }
-    res.json(out);
-  } catch (err) {
-    res.json({
-      error: err.message,
+  const { fullName, email, sex, address, inviteCode } = req.body;
+  const userData = { fullName, email, sex: parseInt(sex), address };
+  if (!validateUser(userData)) {
+    return res.json({
+      error: 'Datos de usuario inválidos.',
     });
   }
+  // Revisar código de invitación
+  let inviteLink;
+  try {
+    if (inviteCode) {
+      inviteLink = (await getInviteLinkByCode(inviteCode)).rows[0];
+      if (!inviteLink) {
+        return res.json({
+          error:
+            'El código de invitación es inválido. No se ha creado la cuenta.',
+        });
+      }
+    }
+  } catch (err) {
+    return res.json({
+      error:
+        'No se pudo validar el código de invitación. No se ha creado la cuenta.',
+    });
+  }
+  // Revisar si usuario ya existe
+  let user;
+  try {
+    user = (await insertUser(userData)).rows[0];
+  } catch (err) {
+    return res.json({
+      error: 'El correo ingresado ya existe.',
+    });
+  }
+  const out = { user };
+  // aceptar invitación
+  if (user && inviteLink) {
+    const inviteData = {
+      inviterId: inviteLink.userId,
+      invitedId: user.id,
+      inviteLinkId: inviteLink.id,
+    };
+    const invite = (await insertInvite(inviteData)).rows[0];
+    out.invite = invite;
+  }
+  return res.json(out);
 });
 
 router.post('/invite', async (req, res) => {
+  const { email, fullName } = req.body;
+  if (!validateEmail(email)) {
+    return res.json({
+      error: 'El correo ingresado es inválido.',
+    });
+  }
+  // Ver si correo existe
   try {
-    const { email, fullName } = req.body;
-    if (!validateEmail(email)) {
-      throw new Error('Invalid email data');
-    }
     const queryData = await getUserByEmail(email);
     const user = queryData.rows[0];
-    if (user && user.fullName === fullName) {
-      const result = await insertInviteLink(user);
-      const resultingInvite = result.rows[0];
-      res.json(resultingInvite);
+    if (!user) {
+      return res.json({
+        error: 'El correo no se encuentra registrado.',
+      });
+    }
+    if (user.fullName === fullName) {
+      const resultingInvite = (await insertInviteLink(user)).rows[0];
+      return res.json(resultingInvite);
+    } else {
+      return res.json({
+        error: 'El nombre proporcionado no corresponde al correo.',
+      });
     }
   } catch (err) {
-    res.json({
-      error: err.message,
+    return res.json({
+      error: 'No se pudo efectuar la operación.',
     });
   }
 });
