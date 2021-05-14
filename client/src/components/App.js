@@ -3,6 +3,7 @@ import Container from '@material-ui/core/Container';
 
 import Homepage from './Homepage';
 import Navbar from './Navbar';
+import NotificationAlert from './NotificationAlert';
 import RegisterForm from './RegisterForm';
 import InviteForm from './InviteForm';
 import RankingTable from './RankingTable';
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/invite" exact component={InviteForm} />
           <Route path="/ranking" exact component={RankingTable} />
         </Container>
+        <NotificationAlert />
       </BrowserRouter>
     </div>
   );
