@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import {
   makeStyles,
   Typography,
@@ -12,6 +13,8 @@ import {
   TableBody,
 } from '@material-ui/core';
 
+import { fetchRanking } from '../actions';
+
 const useStyles = makeStyles(theme => ({
   tableBase: {
     padding: theme.spacing(2),
@@ -23,6 +26,23 @@ const useStyles = makeStyles(theme => ({
 
 const InviteForm = props => {
   const classes = useStyles();
+  const { fetchRanking } = props;
+
+  useEffect(() => {
+    fetchRanking();
+  }, [fetchRanking]);
+
+  const renderList = () => {
+    return props.ranking.map(rankingItem => {
+      return (
+        <TableRow>
+          <TableCell>{rankingItem.fullName}</TableCell>
+          <TableCell>{rankingItem.usersInvited}</TableCell>
+          <TableCell>${rankingItem.amount}</TableCell>
+        </TableRow>
+      );
+    });
+  };
 
   return (
     <Container maxWidth="sm">
@@ -39,7 +59,7 @@ const InviteForm = props => {
                 <TableCell>Monto ($)</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody></TableBody>
+            <TableBody>{renderList()}</TableBody>
           </Table>
         </TableContainer>
       </Paper>
@@ -47,4 +67,10 @@ const InviteForm = props => {
   );
 };
 
-export default InviteForm;
+const mapStateToProps = state => {
+  return {
+    ranking: state.invites.ranking,
+  };
+};
+
+export default connect(mapStateToProps, { fetchRanking })(InviteForm);
