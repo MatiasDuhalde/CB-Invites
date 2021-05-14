@@ -5,6 +5,7 @@ import Homepage from './Homepage';
 import Navbar from './Navbar';
 import RegisterForm from './RegisterForm';
 import InviteForm from './InviteForm';
+import RankingTable from './RankingTable';
 
 const App = () => {
   return (
@@ -15,7 +16,7 @@ const App = () => {
           <Route path="/" exact component={Homepage} />
           <Route path="/register" exact component={RegisterForm} />
           <Route path="/invite" exact component={InviteForm} />
-          <Route path="/ranking" exact component={Homepage} />
+          <Route path="/ranking" exact component={RankingTable} />
         </Container>
       </BrowserRouter>
     </div>
