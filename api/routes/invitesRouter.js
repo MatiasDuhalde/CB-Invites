@@ -14,7 +14,7 @@ const router = express.Router();
 router.get('/ranking', async (req, res) => {
   try {
     ranking = (await getRanking()).rows;
-    res.json({ ranking });
+    res.json(ranking);
   } catch (err) {
     res.json({
       error: err.message,

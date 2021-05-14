@@ -17,7 +17,7 @@ const getInviteLinkByCode = async linkCode => {
 
 const getRanking = async () => {
   return pool.query(
-    'SELECT users.id, users."fullName", users.email, COUNT(invites."invitedId") AS "usersInvited" FROM invites LEFT JOIN users ON users.id=invites."inviterId" GROUP BY users.id, users."fullName", users.email ORDER BY "usersInvited" DESC',
+    'SELECT users.id, users."fullName", users.email, CAST(COUNT(invites."invitedId") AS INT) AS "usersInvited", (CAST(COUNT(invites."invitedId") AS INT)*5000) AS amount FROM invites LEFT JOIN users ON users.id=invites."inviterId" GROUP BY users.id, users."fullName", users.email ORDER BY "usersInvited" DESC',
   );
 };
 
