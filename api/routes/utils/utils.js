@@ -23,7 +23,7 @@ const validateUser = user => {
 };
 
 const generateInviteLinkCode = user => {
-  return md5(`${user.id}${Date.now()}${user.id}`);
+  return md5(`${user.id}${Date.now()}${Math.random()}`);
 };
 
 module.exports = {
