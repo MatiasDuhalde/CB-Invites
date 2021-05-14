@@ -35,7 +35,7 @@ const InviteForm = props => {
   const renderList = () => {
     return props.ranking.map(rankingItem => {
       return (
-        <TableRow>
+        <TableRow key={rankingItem.id}>
           <TableCell>{rankingItem.fullName}</TableCell>
           <TableCell>{rankingItem.usersInvited}</TableCell>
           <TableCell>${rankingItem.amount}</TableCell>
