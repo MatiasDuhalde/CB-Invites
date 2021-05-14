@@ -133,7 +133,13 @@ const RegisterForm = props => {
                     helperText={error ? error.message : null}
                   />
                 )}
-                rules={{ required: 'Debes ingresar un correo válido' }}
+                rules={{
+                  required: 'Debes ingresar un correo válido',
+                  pattern: {
+                    value: /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$/g,
+                    message: 'Debes ingresar un correo válido',
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12}>

@@ -92,7 +92,10 @@ const InviteForm = props => {
                     helperText={error ? error.message : null}
                   />
                 )}
-                rules={{ required: 'Debes ingresar un correo válido' }}
+                rules={{
+                  required: 'Debes ingresar un correo válido',
+                  pattern: /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$/g,
+                }}
               />
             </Grid>
             <Grid item xs={6}>
