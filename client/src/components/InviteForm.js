@@ -20,6 +20,12 @@ const useStyles = makeStyles(theme => ({
   title: {
     margin: theme.spacing(1),
   },
+  linkContainer: {
+    marginTop: theme.spacing(2),
+  },
+  gridItem: {
+    textAlign: 'center',
+  },
 }));
 
 const InviteForm = props => {
@@ -37,6 +43,28 @@ const InviteForm = props => {
 
   const onSubmit = data => {
     createInviteLink(data);
+  };
+
+  const renderInviteLink = () => {
+    if (createdInvite) {
+      return (
+        <Grid container spacing={3} className={classes.linkContainer}>
+          <Grid item xs={12} className={classes.gridItem}>
+            <Typography variant="h6">
+              ¡Comparte este link con alguien más para obtener tu recompensa!
+            </Typography>
+          </Grid>
+          <Grid item xs={12} className={classes.gridItem}>
+            <Typography variant="overline">
+              {`${window.location.origin.toString()}/register/${
+                createdInvite.code
+              }`}
+            </Typography>
+          </Grid>
+        </Grid>
+      );
+    }
+    return null;
   };
 
   return (
@@ -106,6 +134,7 @@ const InviteForm = props => {
               </CustomButton>
             </Grid>
           </Grid>
+          {renderInviteLink()}
         </Paper>
       </Container>
     </form>
