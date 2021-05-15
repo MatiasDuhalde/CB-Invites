@@ -1,7 +1,6 @@
-const pool = require('../config/pool');
 const { getUsers, getInviteLinks, insertInvites } = require('./utils/queries');
 
-const wrapper = async () => {
+module.exports = async () => {
   const users = await getUsers();
   const inviteLinks = await getInviteLinks();
 
@@ -23,5 +22,3 @@ const wrapper = async () => {
 
   await insertInvites(invites);
 };
-
-wrapper();
