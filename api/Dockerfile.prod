@@ -1,0 +1,8 @@
+FROM node:current-alpine3.12
+
+WORKDIR /app
+
+COPY . .
+RUN yarn install --production
+
+CMD ["yarn", "prod"]

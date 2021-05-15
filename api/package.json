@@ -6,7 +6,8 @@
     "start": "node index.js",
     "dev": "nodemon --ext js index.js",
     "seed": "node seeds/",
-    "migrate": "node migrations/"
+    "migrate": "node migrations/",
+    "prod": "node ."
   },
   "author": "Matias Duhalde",
   "license": "MIT",
