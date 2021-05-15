@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { connect } from 'react-redux';
 import {
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const RegisterForm = props => {
-  const { createdUser, acceptedInvite } = props;
+  const { createUser } = props;
   const classes = useStyles();
 
   const defaultValues = {
@@ -41,22 +41,8 @@ const RegisterForm = props => {
   const { handleSubmit, control, reset } = useForm({ defaultValues });
 
   const onSubmit = data => {
-    props.createUser(data);
+    createUser(data);
   };
-
-  useEffect(() => {
-    if (createdUser) {
-      console.log('SE HA CREADO EL USUARIO CON LOS SIGUIENTES DATOS:');
-      console.log(createdUser);
-    }
-  }, [createdUser]);
-
-  useEffect(() => {
-    if (acceptedInvite) {
-      console.log('SE HA ACEPTADO LA INVITACIÓN');
-      console.log(acceptedInvite);
-    }
-  }, [acceptedInvite]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -180,11 +166,4 @@ const RegisterForm = props => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    createdUser: state.users.createdUser,
-    acceptedInvite: state.users.acceptedInvite,
-  };
-};
-
-export default connect(mapStateToProps, { createUser })(RegisterForm);
+export default connect(null, { createUser })(RegisterForm);

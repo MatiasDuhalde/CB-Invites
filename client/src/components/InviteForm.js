@@ -24,6 +24,7 @@ const useStyles = makeStyles(theme => ({
 
 const InviteForm = props => {
   const { createdInvite } = props;
+  const { createInviteLink } = props;
 
   const classes = useStyles();
 
@@ -35,15 +36,8 @@ const InviteForm = props => {
   const { handleSubmit, control, reset } = useForm({ defaultValues });
 
   const onSubmit = data => {
-    props.createInviteLink(data);
+    createInviteLink(data);
   };
-
-  useEffect(() => {
-    if (createdInvite) {
-      console.log('SE HA CREADO CORRECTAMENTE LA INVITACIÓN');
-      console.log(createdInvite);
-    }
-  }, [createdInvite]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
