@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon --ext js index.js",
-    "seed": "node seeds/"
+    "seed": "node seeds/",
+    "migrate": "node migrations/"
   },
   "author": "Matias Duhalde",
   "license": "MIT",
