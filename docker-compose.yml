@@ -30,15 +30,21 @@ services:
     volumes:
       - ./api:/app
       - /app/node_modules
-#   client:
-#     container_name: client-container
-#     restart: always
-#     build:
-#       context: ./client
-#       dockerfile: Dockerfile.prod
-#     ports:
-#       - '3010:80'
-#     depends_on:
-#       - api
-# volumes:
-#   cb_invites_development:
+  client:
+    container_name: client-container
+    restart: always
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=$CLIENT_NODE_ENV
+      - PORT=$CLIENT_PORT
+      - REACT_APP_API_HOST
+    ports:
+      - '$CLIENT_PORT:$CLIENT_PORT'
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    depends_on:
+      - api
+    stdin_open: true

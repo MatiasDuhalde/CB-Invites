@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const invitesAPI = axios.create({
-  baseURL: 'http://localhost:3005',
+  baseURL: process.env.REACT_APP_API_HOST || 'http://localhost:3005',
 });
 
 export default invitesAPI;
