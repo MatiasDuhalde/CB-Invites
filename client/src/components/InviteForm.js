@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 
 import CustomButton from './CustomButton';
-import { createInviteLink } from '../actions';
+import { createInviteLink, showNotification } from '../actions';
 
 const useStyles = makeStyles(theme => ({
   formBase: {
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const InviteForm = props => {
-  const { createdInvite } = props;
+  const { createdInvite, showNotification } = props;
   const { createInviteLink } = props;
 
   const classes = useStyles();
@@ -43,6 +43,18 @@ const InviteForm = props => {
 
   const onSubmit = data => {
     createInviteLink(data);
+  };
+
+  const copyLink = () => {
+    navigator.clipboard.writeText(
+      `${`${window.location.origin.toString()}/register/${
+        createdInvite.code
+      }`}`,
+    );
+    showNotification(true, {
+      type: 'info',
+      message: 'Se ha copiado el link al portapapeles.',
+    });
   };
 
   const renderInviteLink = () => {
@@ -60,6 +72,9 @@ const InviteForm = props => {
                 createdInvite.code
               }`}
             </Typography>
+          </Grid>
+          <Grid item xs={12} className={classes.gridItem}>
+            <CustomButton onClick={copyLink}>Copiar</CustomButton>
           </Grid>
         </Grid>
       );
@@ -147,4 +162,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { createInviteLink })(InviteForm);
+export default connect(mapStateToProps, { createInviteLink, showNotification })(
+  InviteForm,
+);
