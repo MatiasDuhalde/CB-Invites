@@ -16,6 +16,7 @@ const App = () => {
         <Container maxWidth="md" style={{ padding: '1em 0 1em 0' }}>
           <Route path="/" exact component={Homepage} />
           <Route path="/register" exact component={RegisterForm} />
+          <Route path="/register/:inviteCode" exact component={RegisterForm} />
           <Route path="/invite" exact component={InviteForm} />
           <Route path="/ranking" exact component={RankingTable} />
         </Container>

@@ -29,6 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 const RegisterForm = props => {
   const { createUser } = props;
+  const inviteCode = props.match.params.inviteCode || '';
   const classes = useStyles();
 
   const defaultValues = {
@@ -38,7 +39,7 @@ const RegisterForm = props => {
     sex: '',
   };
 
-  const { handleSubmit, control, reset } = useForm({ defaultValues });
+  const { register, handleSubmit, control, reset } = useForm({ defaultValues });
 
   const onSubmit = data => {
     createUser(data);
@@ -46,6 +47,12 @@ const RegisterForm = props => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <input
+        type="hidden"
+        name="inviteCode"
+        value={inviteCode}
+        {...register('inviteCode')}
+      />
       <Container maxWidth="sm">
         <Typography variant="h2" className={classes.title}>
           Registrarse
