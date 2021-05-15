@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  postgres:
+    build: ./db
+    environment:
+      - POSTGRES_USER=$DB_USERNAME
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+    ports:
+      - '$DB_PORT'
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+    restart: always
+    command: -p $DB_PORT
+  api:
+    container_name: api-container
+    restart: always
+    build: ./api
+    environment:
+      - NODE_ENV=$API_NODE_ENV
+      - PORT=$API_PORT
+      - DB_HOST=postgres
+      - DB_PORT=$DB_PORT
+      - DB_USERNAME=$DB_USERNAME
+      - DB_PASSWORD=$DB_PASSWORD
+      - DB_NAME=$DB_NAME
+    ports:
+      - '$API_PORT:$API_PORT'
+    depends_on:
+      - postgres
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+#   client:
+#     container_name: client-container
+#     restart: always
+#     build:
+#       context: ./client
+#       dockerfile: Dockerfile.prod
+#     ports:
+#       - '3010:80'
+#     depends_on:
+#       - api
+# volumes:
+#   cb_invites_development:
