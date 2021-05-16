@@ -42,9 +42,13 @@ services:
     volumes:
       - ./client/build:/app/build
       - /app/node_modules
+    depends_on:
+      - client_server
+      - api
   client_server:
     image: nginx:alpine
     ports:
       - 80:80
     volumes:
       - ./client/build:/usr/share/nginx/html
+      - ./client/config/nginx:/etc/nginx/conf.d/
