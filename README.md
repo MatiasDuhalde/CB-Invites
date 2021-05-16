@@ -41,6 +41,8 @@ $ yarn install
 $ yarn start
 ```
 
+La API se ejecuta en [localhost:3005](http://localhost:3005) y el frontend en [localhost:3000](http://localhost:3000)
+
 ## Método 2
 
 ### Requisitos:
@@ -58,3 +60,5 @@ $ docker exec -it api-container yarn migrate
 # Ejecutar seeds
 $ docker exec -it api-container yarn seed
 ```
+
+La API se ejecuta en [localhost:3005](http://localhost:3005) y el frontend en [localhost:80](http://localhost:80)
