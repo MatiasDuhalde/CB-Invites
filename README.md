@@ -8,6 +8,17 @@
 - `Node` (v16)
 - `yarn` (v1.22.10 idealmente, o en su defecto también se puede usar `npm` v7)
 
+
+### Ejecutar servidor (API/Backend) localmente:
+
+```bash
+$ cd api
+# Instalar dependencias
+$ yarn install
+# Ejecutar servidor
+$ yarn start
+```
+
 ### Setup base de datos (postgres)
 
 ```bash
@@ -19,16 +30,6 @@ $ cd api
 $ yarn migrate
 # Ejecutar seeds
 $ yarn seed
-```
-
-### Ejecutar servidor (API/Backend) localmente:
-
-```bash
-$ cd api
-# Instalar dependencias
-$ yarn install
-# Ejecutar servidor
-$ yarn start
 ```
 
 ### Ejecutar cliente (Frontend) localmente:
